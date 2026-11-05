@@ -1,9 +1,9 @@
 name: x402-spend-guard
-version: "0.1.0"
+version: "0.1.1"
 description: Pay x402 URLs only inside a signed spend mandate, and stop other payment tools that the guard refuses.
 author: Run It Bula, Inc.
 license: Apache-2.0
-requires_hermes: ">=0.19.0"
+requires_hermes: ">=0.22.7"
 provides_tools:
   - guarded_fetch
   - check_payment
@@ -24,6 +24,6 @@ config_schema:
     description: Address of your guard-server
   gated_tools:
     type: str
-    default: "x402|pay|wallet|transfer|swap"
+    default: "x402|pay|wallet|transfer|swap|fund|purchase|buy|checkout|withdraw|deposit|remit"
     label: Gated tools
     description: Regular expression. The guard checks other tools whose name matches.

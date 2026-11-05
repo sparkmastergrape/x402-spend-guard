@@ -42,6 +42,16 @@ class Hook(unittest.TestCase):
     def test_a_tool_outside_the_gate_passes(self):
         self.assertIsNone(hook("read_file", {}))
 
+    def test_money_words_reach_the_guard(self):
+        names = ("send_funds", "buy_data", "purchase_item", "checkout", "withdraw_usd", "deposit_xrp", "remit")
+        for name in names:
+            result = hook(name, self.URL, {"outcome": "checked", "verdict": {"decision": "DENY"}, "code": "X"})
+            self.assertEqual(result["action"], "block", name)
+
+    def test_common_tools_stay_outside_the_gate(self):
+        for name in ("web_search", "terminal", "read_file", "send_message", "browser_click"):
+            self.assertIsNone(hook(name, self.URL), name)
+
     def test_own_tools_pass(self):
         self.assertIsNone(hook("guarded_fetch", self.URL))
 

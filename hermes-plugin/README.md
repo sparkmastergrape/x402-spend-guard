@@ -11,7 +11,7 @@ A person signs one spend mandate. The guard then decides each x402 payment.
 | `check_payment` | Shows the verdict for a URL. It reserves, signs and records nothing. |
 | `spend_status` | Shows the mandate, the caps and the spend. |
 | `spend_audit` | Lists recent payer events. |
-| `pre_tool_call` hook | Checks other tools whose names look like payment tools. |
+| `pre_tool_call` hook | Checks other tools whose names contain a money word, such as `pay`, `fund`, `buy` or `withdraw`. Set `gated_tools` to change the list. |
 
 The hook takes one of these actions for another payment tool:
 
@@ -38,7 +38,8 @@ The hook takes one of these actions for another payment tool:
 - **Other network calls:** guard-server sends requests to each URL. `check_payment` and the hook also send a request to the URL.
 - **Repeat requests:** a checked call can reach the URL again when the tool runs. Check that the URL is safe to request two times.
 - **Credentials:** the plugin stores no secret. guard-server holds the agent key. Keep the wallet balance small.
-- **Name match:** the hook finds payment tools by name and by these argument names: `url`, `uri`, `endpoint`, `resource`. A tool with another name is not checked.
+- **Name match:** the hook finds payment tools by name and by these argument names: `url`, `uri`, `endpoint`, `resource`. The default list covers common money words. A tool with another name is not checked. Set `gated_tools` for your own tools.
+- **Plugin changes:** Hermes can keep an auto-started gateway running with the old plugin code. Stop that gateway after you change the plugin or its settings.
 - **Check limit:** the hook check reserves nothing, and a tool with its own wallet does not use the guard's spend ledger.
 - **Approval bypass:** `--yolo` and `approvals.mode: off` skip the Hermes approval gate. An `ESCALATE` result then lets another payment tool run. A `DENY` result still blocks.
 - **Spend totals:** guard-server keeps totals in memory. A restart resets them.

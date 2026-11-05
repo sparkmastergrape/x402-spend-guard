@@ -6,7 +6,7 @@ import re
 from . import client, schemas, tools
 
 TOOLSET = "x402_spend_guard"
-DEFAULT_GATED = "x402|pay|wallet|transfer|swap"
+DEFAULT_GATED = "x402|pay|wallet|transfer|swap|fund|purchase|buy|checkout|withdraw|deposit|remit"
 URL_KEYS = ("url", "uri", "endpoint", "resource")
 OWN_TOOLS = ("guarded_fetch", "check_payment", "spend_status", "spend_audit")
 
