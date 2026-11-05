@@ -1,0 +1,72 @@
+{
+  "name": "spend-gate",
+  "version": "0.1.0",
+  "description": "Agent Spend Gate: a signed spend policy for autonomous agents (Guard, SpendLedger, Grants, receipts, audit events)",
+  "license": "Apache-2.0",
+  "private": true,
+  "type": "module",
+  "main": "index.js",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./payer": "./src/payer/index.js",
+    "./audit": "./src/audit/index.js",
+    "./device": "./src/device/index.mjs",
+    "./ap2": "./src/ap2/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "src",
+    "contracts",
+    "examples",
+    "README.md",
+    "NOTICE",
+    "LICENSE",
+    "!**/.env",
+    "!**/.env.*",
+    "!**/.envrc",
+    "!**/*.pem",
+    "!**/*.key",
+    "!**/id_rsa*",
+    "!**/secrets.*",
+    "!**/*.log",
+    "!**/node_modules",
+    "!**/*.test.mjs",
+    "!**/test-support"
+  ],
+  "scripts": {
+    "test": "node --test --test-reporter=spec \"src/**/*.test.mjs\"",
+    "test:device": "node src/device/test-support/run-device-tests.mjs",
+    "injection": "node src/demo/injection-scene.mjs",
+    "example": "node examples/basic.mjs"
+  },
+  "dependencies": {
+    "@x402/core": "^2.29.0",
+    "@x402/evm": "^2.29.0",
+    "ethers": "^6.17.0",
+    "viem": "^2.57.11"
+  },
+  "peerDependencies": {
+    "@ledgerhq/device-management-kit": "^1.11.0",
+    "@ledgerhq/device-signer-kit-ethereum": "^1.18.2",
+    "@ledgerhq/device-transport-kit-speculos": "^1.3.0",
+    "reflect-metadata": "^0.2.2"
+  },
+  "peerDependenciesMeta": {
+    "@ledgerhq/device-management-kit": {
+      "optional": true
+    },
+    "@ledgerhq/device-signer-kit-ethereum": {
+      "optional": true
+    },
+    "@ledgerhq/device-transport-kit-speculos": {
+      "optional": true
+    },
+    "reflect-metadata": {
+      "optional": true
+    }
+  }
+}

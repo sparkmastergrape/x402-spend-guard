@@ -1,0 +1,7 @@
+x402-spend-guard
+Copyright 2026 Run It Bula, Inc.
+
+This product includes a test vector from the Agent Payments Protocol (AP2)
+specification, https://github.com/google-agentic-commerce/AP2,
+Copyright Google LLC, licensed under the Apache License, Version 2.0.
+See packages/spend-gate/src/ap2/vectors/README.md.
