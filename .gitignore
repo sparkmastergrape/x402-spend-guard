@@ -4,3 +4,5 @@ node_modules/
 *.log
 *.pem
 *.key
+__pycache__/
+*.pyc

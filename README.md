@@ -7,6 +7,7 @@ The Guard then checks each payment against that mandate before the agent signs.
 |---|---|
 | [`packages/spend-gate`](packages/spend-gate) | Mandates, the Guard, the spend ledger, grants, receipts and audit events |
 | [`packages/guard-server`](packages/guard-server) | MCP and HTTP interface to the Guard |
+| [`hermes-plugin`](hermes-plugin) | Hermes Agent plugin for guard-server |
 
 ## Status
 

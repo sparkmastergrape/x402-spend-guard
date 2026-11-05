@@ -1,0 +1,29 @@
+name: x402-spend-guard
+version: "0.1.0"
+description: Pay x402 URLs only inside a signed spend mandate, and stop other payment tools that the guard refuses.
+author: Run It Bula, Inc.
+license: Apache-2.0
+requires_hermes: ">=0.19.0"
+provides_tools:
+  - guarded_fetch
+  - check_payment
+  - spend_status
+  - spend_audit
+provides_hooks:
+  - pre_tool_call
+requires_env:
+  - name: GUARD_HTTP_TOKEN
+    description: Bearer token of your local guard-server
+    url: https://github.com/sparkmastergrape/x402-spend-guard
+    secret: true
+config_schema:
+  guard_url:
+    type: str
+    default: "http://127.0.0.1:8402"
+    label: Guard URL
+    description: Address of your guard-server
+  gated_tools:
+    type: str
+    default: "x402|pay|wallet|transfer|swap"
+    label: Gated tools
+    description: Regular expression. The guard checks other tools whose name matches.
