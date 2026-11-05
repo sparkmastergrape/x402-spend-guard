@@ -40,6 +40,7 @@ The hook takes one of these actions for another payment tool:
 - **Credentials:** the plugin stores no secret. guard-server holds the agent key. Keep the wallet balance small.
 - **Name match:** the hook finds payment tools by name and by these argument names: `url`, `uri`, `endpoint`, `resource`. A tool with another name is not checked.
 - **Check limit:** the hook check reserves nothing, and a tool with its own wallet does not use the guard's spend ledger.
+- **Approval bypass:** `--yolo` and `approvals.mode: off` skip the Hermes approval gate. An `ESCALATE` result then lets another payment tool run. A `DENY` result still blocks.
 - **Spend totals:** guard-server keeps totals in memory. A restart resets them.
 - **Testnet only:** use this on a testnet.
 

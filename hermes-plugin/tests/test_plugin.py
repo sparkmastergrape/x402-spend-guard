@@ -66,6 +66,13 @@ class Hook(unittest.TestCase):
         verdict = {"outcome": "checked", "verdict": {"decision": "ESCALATE"}}
         self.assertEqual(hook("x402_pay", self.URL, verdict)["action"], "approve")
 
+    def test_an_approval_covers_one_payment_only(self):
+        verdict = {"outcome": "checked", "amount": "5", "code": "OVER_PER_CALL", "verdict": {"decision": "ESCALATE"}}
+        first = hook("x402_pay", self.URL, verdict)["rule_key"]
+        self.assertEqual(first, hook("x402_pay", self.URL, verdict)["rule_key"])
+        self.assertNotEqual(first, hook("x402_pay", {"url": "https://other.example/"}, verdict)["rule_key"])
+        self.assertNotEqual(first, hook("x402_pay", self.URL, {**verdict, "amount": "6"})["rule_key"])
+
     def test_an_unknown_outcome_blocks(self):
         self.assertEqual(hook("x402_pay", self.URL, {"outcome": "new"})["action"], "block")
 

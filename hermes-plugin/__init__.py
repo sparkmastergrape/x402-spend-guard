@@ -1,5 +1,6 @@
 """x402-spend-guard: a Hermes plugin for a local guard-server."""
 
+import hashlib
 import re
 
 from . import client, schemas, tools
@@ -24,6 +25,12 @@ def _find_url(args):
     return None
 
 
+def _rule_key(tool_name, url, amount, code):
+    """Hermes uses the tool name if this is empty, so one yes would cover every later payment."""
+    digest = hashlib.sha256("|".join((tool_name, url, amount, code)).encode("utf-8")).hexdigest()
+    return tool_name + ":" + digest[:16]
+
+
 def pre_tool_call(tool_name="", args=None, **kwargs):
     """Check a payment tool against the guard. Every failure blocks the call."""
     try:
@@ -42,7 +49,12 @@ def pre_tool_call(tool_name="", args=None, **kwargs):
         if outcome == "checked" and decision == "ALLOW":
             return None
         if outcome == "checked" and decision == "ESCALATE":
-            return {"action": "approve", "message": "The payment is outside the mandate: " + code}
+            amount = str(verdict.get("amount"))
+            return {
+                "action": "approve",
+                "message": "Payment of " + amount + " to " + str(url) + " is outside the mandate: " + code,
+                "rule_key": _rule_key(tool_name, url, amount, code),
+            }
         return _block("Guard result: " + str(outcome) + " " + str(decision) + " " + code)
     except Exception as error:  # Hermes skips a hook that crashes, so a crash must block.
         return _block("The guard check failed: " + str(error))
